@@ -1,0 +1,27 @@
+const int sensorPin = A0;
+const float R1 = 100000.0;
+const float R2 = 10000.0;
+
+float adcVoltage = 0.0;
+float batteryVoltage = 0.0;
+
+void setup() {
+  Serial.begin(9600);
+  Serial.println("Real-Time Piezo Energy Monitoring System");
+}
+
+void loop() {
+  int adcValue = analogRead(sensorPin);
+
+  // Convert ADC to voltage
+  adcVoltage = adcValue * (5.0 / 1023.0);
+
+  // Convert to actual battery voltage
+  batteryVoltage = adcVoltage * ((R1 + R2) / R2);
+
+  Serial.print("Battery Voltage: ");
+  Serial.print(batteryVoltage);
+  Serial.println(" V");
+
+  delay(500);
+}
